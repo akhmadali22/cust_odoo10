@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="survey_generator_form" model="ir.ui.view">
+			<field name="name">survey.generator.form</field>
+			<field name="model">survey.generator</field>
+			<field name="arch" type="xml">
+				<form>
+					<group>
+						<field name="template" mode="tree" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="sequence" widget="handle"/>
+                                <field name="name"/>
+                            </tree>
+                        </field> 
+					</group>
+					<footer>
+						<button name="generate_survey" string="Generate Surveys"
+							type="object" class="btn-primary" />
+						<button string="Cancel" class="btn-secondary" special="cancel" />
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_survey_generator" model="ir.actions.act_window">
+			<field name="name">Generate Survey</field>
+			<field name="res_model">survey.generator</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+			<field name="binding_model_id" ref="survey.model_survey_survey" />
+			<field name="binding_view_types">list</field>
+		</record>
+
+		<record id="inherit_view_survey_survey_form" model="ir.ui.view">
+			<field name="name">inherit.view.survey.survey.form</field>
+			<field name="model">survey.survey</field>
+			<field name="inherit_id" ref="survey.survey_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//form//header" position="inside">
+					<button type="action" name="%(action_survey_generator)d"
+						string="Generate Survey" class="btn btn-primary"/>
+				</xpath>
+			</field>
+		</record>
+	</data>
+</odoo>
